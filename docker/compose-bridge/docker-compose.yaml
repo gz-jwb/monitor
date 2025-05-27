@@ -53,22 +53,22 @@ services:
   #   ports:
   #     - "9090:9090"
 
-  victoriametrics:
-    image: victoriametrics/victoria-metrics:v1.79.12
-    container_name: victoriametrics
-    hostname: victoriametrics
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-    ports:
-      - "8428:8428"
-    networks:
-      - nightingale
-    command:
-      - "--loggerTimezone=Asia/Shanghai"
+  # victoriametrics:
+  #   image: victoriametrics/victoria-metrics:v1.79.12
+  #   container_name: victoriametrics
+  #   hostname: victoriametrics
+  #   restart: always
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #   ports:
+  #     - "8428:8428"
+  #   networks:
+  #     - nightingale
+  #   command:
+  #     - "--loggerTimezone=Asia/Shanghai"
 
   nightingale:
-    image: flashcatcloud/nightingale:latest
+    image: flashcatcloud/nightingale:v8.0.0-beta.10
     container_name: nightingale
     hostname: nightingale
     restart: always
@@ -86,25 +86,25 @@ services:
     depends_on:
       - mysql
       - redis
-      - victoriametrics
+      # - victoriametrics
     command: >
       sh -c "/app/n9e"
 
-  categraf:
-    image: "flashcatcloud/categraf:latest"
-    container_name: "categraf"
-    hostname: "categraf01"
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-      HOST_PROC: /hostfs/proc
-      HOST_SYS: /hostfs/sys
-      HOST_MOUNT_PREFIX: /hostfs
-      WAIT_HOSTS: nightingale:17000, nightingale:20090
-    volumes:
-      - ./etc-categraf:/etc/categraf/conf
-      - /:/hostfs
-    networks:
-      - nightingale
-    depends_on:
-      - nightingale
+  # categraf:
+  #   image: "flashcatcloud/categraf:latest"
+  #   container_name: "categraf"
+  #   hostname: "categraf01"
+  #   restart: always
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #     HOST_PROC: /hostfs/proc
+  #     HOST_SYS: /hostfs/sys
+  #     HOST_MOUNT_PREFIX: /hostfs
+  #     WAIT_HOSTS: nightingale:17000, nightingale:20090
+  #   volumes:
+  #     - ./etc-categraf:/etc/categraf/conf
+  #     - /:/hostfs
+  #   networks:
+  #     - nightingale
+  #   depends_on:
+  #     - nightingale
