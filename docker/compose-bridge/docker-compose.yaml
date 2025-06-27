@@ -1,6 +1,3 @@
-networks:
-  nightingale:
-    driver: bridge
 
 services:
   mysql:
@@ -12,11 +9,12 @@ services:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: u04t3fxg0imusvi7
     volumes:
-      - ./mysqldata:/var/lib/mysql/
-      - ../initsql:/docker-entrypoint-initdb.d/
-      - ./etc-mysql/my.cnf:/etc/my.cnf
+      - /app/data/n9e/mysql/data:/var/lib/mysql/
+      - /app/data/n9e/initsql:/docker-entrypoint-initdb.d/
+      - /app/data/n9e/etc/my.cnf:/etc/my.cnf
+      - /app/data/n9e/mysql/log:/var/log/mysql
     networks:
-      - nightingale
+      - jwb
     ports:
       - "6001:6001"
 
@@ -27,10 +25,12 @@ services:
     restart: always
     environment:
       TZ: Asia/Shanghai
+    volumes:
+      - /app/data/n9e/redis:/data
     networks:
-      - nightingale
+      - jwb
     ports:
-      - "6380:6380"
+      - "6002:6002"
 
   # prometheus:
   #   image: prom/prometheus
@@ -77,9 +77,9 @@ services:
       TZ: Asia/Shanghai
       WAIT_HOSTS: mysql:6001, redis:6002
     volumes:
-      - ./etc-nightingale:/app/etc
+      - /app/data/n9e/etc/:/app/etc
     networks:
-      - nightingale
+      - jwb
     ports:
       - "5007:5007"
       - "5008:5008"
