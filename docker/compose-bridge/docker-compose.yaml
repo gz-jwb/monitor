@@ -10,7 +10,7 @@ services:
     restart: always
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: u04t3fxg0imusvi7
     volumes:
       - ./mysqldata:/var/lib/mysql/
       - ../initsql:/docker-entrypoint-initdb.d/
@@ -18,7 +18,7 @@ services:
     networks:
       - nightingale
     ports:
-      - "3306:3306"
+      - "6001:6001"
 
   redis:
     image: "redis:6.2"
@@ -30,7 +30,7 @@ services:
     networks:
       - nightingale
     ports:
-      - "6379:6379"
+      - "6380:6380"
 
   # prometheus:
   #   image: prom/prometheus
@@ -53,19 +53,19 @@ services:
   #   ports:
   #     - "9090:9090"
 
-  victoriametrics:
-    image: victoriametrics/victoria-metrics:v1.79.12
-    container_name: victoriametrics
-    hostname: victoriametrics
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-    ports:
-      - "8428:8428"
-    networks:
-      - nightingale
-    command:
-      - "--loggerTimezone=Asia/Shanghai"
+  # victoriametrics:
+  #   image: victoriametrics/victoria-metrics:v1.79.12
+  #   container_name: victoriametrics
+  #   hostname: victoriametrics
+  #   restart: always
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #   ports:
+  #     - "8428:8428"
+  #   networks:
+  #     - nightingale
+  #   command:
+  #     - "--loggerTimezone=Asia/Shanghai"
 
   nightingale:
     image: flashcatcloud/nightingale:latest
@@ -75,36 +75,36 @@ services:
     environment:
       GIN_MODE: release
       TZ: Asia/Shanghai
-      WAIT_HOSTS: mysql:3306, redis:6379
+      WAIT_HOSTS: mysql:6001, redis:6002
     volumes:
       - ./etc-nightingale:/app/etc
     networks:
       - nightingale
     ports:
-      - "17000:17000"
-      - "20090:20090"
+      - "5007:5007"
+      - "5008:5008"
     depends_on:
       - mysql
       - redis
-      - victoriametrics
+      # - victoriametrics
     command: >
       sh -c "/app/n9e"
 
-  categraf:
-    image: "flashcatcloud/categraf:latest"
-    container_name: "categraf"
-    hostname: "categraf01"
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-      HOST_PROC: /hostfs/proc
-      HOST_SYS: /hostfs/sys
-      HOST_MOUNT_PREFIX: /hostfs
-      WAIT_HOSTS: nightingale:17000, nightingale:20090
-    volumes:
-      - ./etc-categraf:/etc/categraf/conf
-      - /:/hostfs
-    networks:
-      - nightingale
-    depends_on:
-      - nightingale
+  # categraf:
+  #   image: "flashcatcloud/categraf:latest"
+  #   container_name: "categraf"
+  #   hostname: "categraf01"
+  #   restart: always
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #     HOST_PROC: /hostfs/proc
+  #     HOST_SYS: /hostfs/sys
+  #     HOST_MOUNT_PREFIX: /hostfs
+  #     WAIT_HOSTS: nightingale:17000, nightingale:20090
+  #   volumes:
+  #     - ./etc-categraf:/etc/categraf/conf
+  #     - /:/hostfs
+  #   networks:
+  #     - nightingale
+  #   depends_on:
+  #     - nightingale
