@@ -68,7 +68,7 @@ services:
   #     - "--loggerTimezone=Asia/Shanghai"
 
   nightingale:
-    image: flashcatcloud/nightingale:latest
+    image: flashcatcloud/nightingale:v8.0.0-beta.10
     container_name: nightingale
     hostname: nightingale
     restart: always
