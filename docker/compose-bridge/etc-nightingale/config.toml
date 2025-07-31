@@ -78,7 +78,7 @@ OpenRSA = false
 
 [DB]
 # postgres: DSN="host=127.0.0.1 port=5432 user=root dbname=n9e_v6 password=1234 sslmode=disable"
-DSN="admin_local:u04t3fxg0imusvi7@tcp(mysql:6001)/n9e_v6?charset=utf8mb4&parseTime=True&loc=Local&allowNativePasswords=true"
+DSN="root:u04t3fxg0imusvi7@tcp(mysql:6001)/n9e_v6?charset=utf8mb4&parseTime=True&loc=Local&allowNativePasswords=true"
 # enable debug mode or not
 Debug = false
 # mysql postgres
@@ -139,25 +139,25 @@ ForceUseServerTS = true
 # QueueMaxSize = 1000000
 # QueuePopSize = 1000
 
-[[Pushgw.Writers]] 
+# [[Pushgw.Writers]] 
 # Url = "http://127.0.0.1:8480/insert/0/prometheus/api/v1/write"
-Url = "http://victoriametrics:8428/api/v1/write"
+# Url = "http://victoriametrics:8428/api/v1/write"
 # Basic auth username
-BasicAuthUser = ""
+# BasicAuthUser = ""
 # Basic auth password
-BasicAuthPass = ""
+# BasicAuthPass = ""
 # timeout settings, unit: ms
-Headers = ["X-From", "n9e"]
-Timeout = 10000
-DialTimeout = 3000
-TLSHandshakeTimeout = 30000
-ExpectContinueTimeout = 1000
-IdleConnTimeout = 90000
+# Headers = ["X-From", "n9e"]
+# Timeout = 10000
+# DialTimeout = 3000
+# TLSHandshakeTimeout = 30000
+# ExpectContinueTimeout = 1000
+# IdleConnTimeout = 90000
 # time duration, unit: ms
-KeepAlive = 30000
-MaxConnsPerHost = 0
-MaxIdleConns = 100
-MaxIdleConnsPerHost = 100
+# KeepAlive = 30000
+# MaxConnsPerHost = 0
+# MaxIdleConns = 100
+# MaxIdleConnsPerHost = 100
 ## Optional TLS Config
 # UseTLS = false
 # TLSCA = "/etc/n9e/ca.pem"

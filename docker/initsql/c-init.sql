@@ -11,15 +11,15 @@ CREATE USER IF NOT EXISTS 'readonly_local'@'localhost' IDENTIFIED BY 'kdVtahdYbP
 GRANT SELECT ON *.* TO 'readonly_local'@'localhost';
 
 -- 远程管理员用户（全权）
-CREATE USER IF NOT EXISTS 'admin_remote'@'%' IDENTIFIED BY 'kxvIqw5uks*nT7]l';
+CREATE USER IF NOT EXISTS 'admin_remote'@'%' IDENTIFIED BY '96qb2r6j5nuaao6a';
 GRANT ALL PRIVILEGES ON *.* TO 'admin_remote'@'%' WITH GRANT OPTION;
 
 -- 远程编辑用户（仅限数据写操作）
-CREATE USER IF NOT EXISTS 'editor_remote'@'%' IDENTIFIED BY ';zs-0eAmfCQ{I6+4';
+CREATE USER IF NOT EXISTS 'editor_remote'@'%' IDENTIFIED BY 'furmehwonubeb2ld';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON *.* TO 'editor_remote'@'%';
 
 -- 远程只读用户
-CREATE USER IF NOT EXISTS 'readonly_remote'@'%' IDENTIFIED BY 'eKo`x6XTB}rh!6u0';
+CREATE USER IF NOT EXISTS 'readonly_remote'@'%' IDENTIFIED BY 'eEEjbJ6HreBqUA3w';
 GRANT SELECT ON *.* TO 'readonly_remote'@'%';
 
 -- 刷新权限使其生效
